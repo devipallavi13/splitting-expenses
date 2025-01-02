@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Expenses App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+
+        #expense-form {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="number"], button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .expense-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .expense-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .expense-item p {
+            margin: 5px 0;
+        }
+
+        .add-participant-btn {
+            background-color: #f1f1f1;
+            color: #333;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .add-participant-btn:hover {
+            background-color: #ddd;
+        }
+
+        .participants {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Split Expenses</h1>
+
+    <!-- Expense Form -->
+    <div id="expense-form">
+        <h2>Add Expense</h2>
+        <input type="text" id="expense-name" placeholder="Expense Name" required>
+        <input type="number" id="total-amount" placeholder="Total Amount" required>
+        
+        <!-- Participants -->
+        <div class="participants" id="participants">
+            <input type="text" placeholder="Enter participant name" required>
+        </div>
+
+        <button class="add-participant-btn" id="add-participant-btn">Add Participant</button>
+        <button id="add-expense-btn">Add Expense</button>
+    </div>
+
+    <!-- Display Expenses -->
+    <div id="expense-list">
+        <h2>Expenses</h2>
+    </div>
+
+    <script>
+        // Array to store participants and expenses
+        let participants = [];
+
+        // Add participant input field
+        document.getElementById("add-participant-btn").addEventListener("click", function() {
+            const participantInput = document.createElement("input");
+            participantInput.type = "text";
+            participantInput.placeholder = "Enter participant name";
+            document.getElementById("participants").appendChild(participantInput);
+        });
+
+        // Add expense
+        document.getElementById("add-expense-btn").addEventListener("click", function() {
+            const expenseName = document.getElementById("expense-name").value;
+            const totalAmount = parseFloat(document.getElementById("total-amount").value);
+            const participantsInputs = document.querySelectorAll("#participants input");
+            const amountsPaid = [];
+
+            participantsInputs.forEach(input => {
+                if (input.value) {
+                    amountsPaid.push({
+                        name: input.value,
+                        paid: parseFloat(prompt(`How much did ${input.value} pay?`))
+                    });
+                }
+            });
+
+            // Calculate how much each person owes
+            const amountPerPerson = totalAmount / participantsInputs.length;
+
+            const expense = {
+                name: expenseName,
+                totalAmount,
+                participants: amountsPaid.map(p => ({
+                    ...p,
+                    owes: amountPerPerson - p.paid
+                }))
+            };
+
+            // Display the added expense
+            displayExpense(expense);
+
+            // Reset the form
+            document.getElementById("expense-name").value = '';
+            document.getElementById("total-amount").value = '';
+            document.getElementById("participants").innerHTML = '<input type="text" placeholder="Enter participant name" required>';
+        });
+
+        // Function to display expenses
+        function displayExpense(expense) {
+            const expenseList = document.getElementById("expense-list");
+            const expenseItem = document.createElement("div");
+            expenseItem.className = "expense-item";
+            expenseItem.innerHTML = `
+                <h3>${expense.name} - Total: $${expense.totalAmount}</h3>
+                ${expense.participants.map(p => `<p>${p.name} owes $${p.owes.toFixed(2)}</p>`).join('')}
+            `;
+            expenseList.appendChild(expenseItem);
+        }
+    </script>
+
+</body>
+</html>

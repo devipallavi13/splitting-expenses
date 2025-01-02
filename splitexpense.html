@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Expenses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .auth-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .auth-buttons button {
+            background-color: #fff;
+            color: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0 5px;
+        }
+
+        .auth-buttons button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            text-align: center;
+        }
+
+        .content button {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+        }
+
+        .content button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Split Expenses</h1>
+        <div class="auth-buttons">
+            <button id="loginButton" onclick="window.location.href='login.html'">Login</button>
+            <button id="registerButton" onclick="window.location.href='register.html'">Register</button>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="content">
+        <button id="splitExpensesButton" onclick="splitExpenses()">Split Expenses</button>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('username') && localStorage.getItem('password')) {
+            // If logged in, hide login and register buttons, show split expenses button
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('registerButton').style.display = 'none';
+            document.getElementById('splitExpensesButton').style.display = 'inline-block';
+        } else {
+            // If not logged in, keep login and register buttons visible
+            document.getElementById('loginButton').style.display = 'inline-block';
+            document.getElementById('registerButton').style.display = 'inline-block';
+            document.getElementById('splitExpensesButton').style.display = 'none';
+        }
+
+        // Function to simulate splitting expenses (just a placeholder)
+        function splitExpenses() {
+            alert('Splitting expenses...');  // You can add real functionality here
+        }
+    </script>
+
+</body>
+</html>
