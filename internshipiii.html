@@ -33,6 +33,17 @@
             color: white;
             cursor: pointer;
         }
+        
+    .user-info span {
+      margin-right: 10px;
+    }
+        .user-info {
+      display: flex;
+      align-items: center;
+    }
+    .user-info span {
+      margin-right: 10px;
+    }
 
         button:hover {
             background-color: #45a049;
@@ -71,11 +82,36 @@
         .participants {
             margin-bottom: 10px;
         }
+        #logout-btn {
+      background-color: #ec83ef; /* Red color */
+    }
+        
+    header {
+      background-color: #4CAF50;
+      padding: 10px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    #logout-btn:hover {
+      background-color: #d32f2f; /* Darker red on hover */
+    }
+
     </style>
 </head>
 <body>
 
-    <h1>Split Expenses</h1>
+    <header>
+        <div class="logo">
+          <h1>Split Expenses</h1>
+        </div>
+        <div class="user-info">
+          <span>Welcome, User!</span>
+          <button id="logout-btn">Logout</button>
+        </div>
+      </header>
 
     <!-- Expense Form -->
     <div id="expense-form">
